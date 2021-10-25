@@ -11,7 +11,7 @@ inputName.focus();
  //Setting an event listener to listen for change in the job role dropdown menu
  // Using conditional to determine when 'other' is selected so the other input box shows.
  const jobRole = document.getElementById('title');
- console.log(jobRole);
+ //console.log(jobRole);
  
  jobRole.addEventListener('change', (e)=>{
     if(e.target.value === 'other'){
@@ -21,4 +21,31 @@ inputName.focus();
     }
  });
 
- 
+ //Tshirt info section
+
+const shirtDesign = document.getElementById('design');
+const shirtColor = document.getElementById('color');
+
+
+shirtColor.disabled = true;
+
+shirtDesign.addEventListener('change', (e)=>{
+    shirtColor.disabled = false;
+    for(let i = 0; i<shirtColor.children.length; i++){
+        const evValues = e.target.value;
+       const dataThemes = shirtColor.children[i].getAttribute("data-theme");
+      
+       if(evValues === dataThemes){
+           shirtColor.children[i].hidden = false;
+           shirtColor.children[i].selected = true; 
+       }else {
+        shirtColor.children[i].hidden = true;
+        shirtColor.children[i].selected = false; 
+       }
+    }
+
+   
+   
+   
+});
+
