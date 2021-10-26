@@ -62,7 +62,7 @@ regForAct.addEventListener('change', (e)=>{
     
    if(e.target.checked){
     totalCost += cost;
-   }else if(e.target.checked = false){
+   }else{
        totalCost -= cost;
    }
 
