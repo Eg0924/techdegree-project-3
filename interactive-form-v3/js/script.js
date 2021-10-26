@@ -66,7 +66,6 @@ regForAct.addEventListener('change', (e)=>{
        totalCost -= cost;
    }
 
-
-    console.log(totalCost);
-    console.log(e.target.checked);
+   totalForAct.innerHTML = `<p>Total: $${totalCost.toFixed(2)}</p>`;
+    
 });
