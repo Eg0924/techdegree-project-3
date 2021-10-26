@@ -88,17 +88,18 @@ bitCoin.hidden = true;
 // Giving the credit card element the selected attribute.
 paymentChoice.children[1].setAttribute('property', 'selected');
 
+//selecting the fieldset with all the payment divs 
 const options = document.querySelector('.payment-methods');
 
 
-
+// listens for change in payment field and displays div based on choice
 paymentChoice.addEventListener('change', (e)=>{
 
     for(let i = 2; i < options.children.length; i++){    
     const choice = e.target.value;
     const displayDivs = options.children[i].getAttribute('class');
     
-
+    //Condition to match the selection's value with the div's class.
     if(choice === displayDivs){
       options.children[i].style.display = 'block' 
       
@@ -106,5 +107,71 @@ paymentChoice.addEventListener('change', (e)=>{
         options.children[i].style.display = 'none';
     }
  }
+});
+
+// Form validation section 
+const emailAddress = document.getElementById('email');
+const cardNum = document.getElementById('cc-num');
+const zipCode = document.getElementById('zip');
+const cardCvv = document.getElementById('cvv');
+const form = document.querySelector('.container');
+
+// console.log(emailAddress);
+// console.log(cardNum);
+// console.log(zipCode);
+// console.log(cardCvv);
+// console.log(form);
+
+//Validation Testing function 
+
+    function isValid(regex, value){
+        const answer = regex.test(value);
+        return answer;
+    }
+//Listening for a sumbit event on the form
+
+form.addEventListener('submit', (e)=>{
+   //e.preventDefault();
+// Name Validation
+    const newName = inputName.value;
+    const regex = /^[A-Z][a-z]* [A-Z][a-z]*$/;
+    const validName = isValid(regex, newName);
+    
+    // Email validation form
+    
+    const tempEmail = emailAddress.value;
+    const regexEmail = /[^@]+@[^@.]+\.[a-z]+$/i;
+     const validEMail = isValid(regexEmail, tempEmail);
+    
+    
+    //---------******Needs Work!
+    //Card number Validation
+    const tempCard = cardNum.value;
+    const visaRegex = /^4[0-9]{12}(?:[0-9]{3})?$/;
+    const validCard = isValid(visaRegex, tempCard);
+
+    //Zip code validation
+    const tempZip = zipCode.value;
+    const regexZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+    const validZip = isValid(regexZip, tempZip);
+
+
+    //CVV code Validation
+    const tempCvv=  cardCvv.value;
+    const regexCvv = /^[0-9]{3}$/;
+    const validCvv = isValid(regexCvv, tempCvv);
+
+
+    //Logging all tests 
+    console.log(validName);
+    console.log(validEMail);
+    console.log(validCard);
+    console.log(validZip);
+    console.log(validCvv);
+    if((!validName) || (!validEMail) || (!validCard) || (!validZip) || (!validCvv)){
+        e.preventDefault();
+    }else{
+
+    }
 });
 
