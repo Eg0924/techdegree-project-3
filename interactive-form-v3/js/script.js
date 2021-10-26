@@ -51,7 +51,7 @@ shirtDesign.addEventListener('change', (e)=>{
 const regForAct = document.getElementById('activities');
 const totalForAct = document.getElementById('activities-cost');
 
-console.log(regForAct);
+
 let totalCost = 0;
 // event listener to store the value of the activity clicked by user!
 regForAct.addEventListener('change', (e)=>{
@@ -59,7 +59,7 @@ regForAct.addEventListener('change', (e)=>{
     let cost = e.target.getAttribute('data-cost');
     cost = +cost;
    // console.log(cost, typeof cost);
-    
+   //checking if an activity is checked and updating the total 
    if(e.target.checked){
     totalCost += cost;
    }else{
@@ -69,3 +69,42 @@ regForAct.addEventListener('change', (e)=>{
    totalForAct.innerHTML = `<p>Total: $${totalCost.toFixed(2)}</p>`;
     
 });
+
+//Payment info section.
+
+const paymentChoice = document.getElementById('payment');
+const card = document.getElementById('credit-card');
+const payPal = document.getElementById('paypal');
+const bitCoin = document.getElementById('bitcoin');
+
+///-----Logging out for testing
+// console.log(paymentChoice);
+// console.log(card);
+// console.log(payPal);
+// console.log(bitCoin);
+payPal.hidden = true;
+bitCoin.hidden = true;
+
+// Giving the credit card element the selected attribute.
+paymentChoice.children[1].setAttribute('property', 'selected');
+
+const options = document.querySelector('.payment-methods');
+
+
+
+paymentChoice.addEventListener('change', (e)=>{
+
+    for(let i = 2; i < options.children.length; i++){    
+    const choice = e.target.value;
+    const displayDivs = options.children[i].getAttribute('class');
+    
+
+    if(choice === displayDivs){
+      options.children[i].style.display = 'block' 
+      
+    }else{
+        options.children[i].style.display = 'none';
+    }
+ }
+});
+
