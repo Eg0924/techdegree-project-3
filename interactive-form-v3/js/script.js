@@ -175,3 +175,17 @@ form.addEventListener('submit', (e)=>{
     }
 });
 
+// Accessibility Section 
+
+const inputActivities = document.querySelectorAll('.activities-box input');
+console.log(inputActivities);
+for(let i = 0; i < inputActivities.length; i++){
+    inputActivities[i].addEventListener('focus', (e)=>{
+        e.target.parentNode.classList.add('focus');
+    });
+    inputActivities[i].addEventListener('blur', (e)=>{
+        e.target.parentNode.classList.remove('focus');
+        
+    });
+    
+}
