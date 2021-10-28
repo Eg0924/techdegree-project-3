@@ -122,11 +122,20 @@ const form = document.querySelector('.container');
 // console.log(cardCvv);
 // console.log(form);
 
-//Validation Testing function 
+//Validation Testing function and accessibility
 
-    function isValid(regex, value){
+// function uses the input value for the field and test the value against the regex variable and then modifies the parent node based on whether the condition is met.
+    function isValid(regex, value, element){
         const answer = regex.test(value);
-        
+        if(!answer){
+            element.parentNode.classList.add('not-valid');
+            element.parentNode.classList.remove('valid');
+            element.parentNode.lastElementChild.style.display = 'block';
+        }else{
+           element.parentNode.classList.add('valid');
+           element.parentNode.classList.remove('not-valid');
+           element.parentNode.lastElementChild.style.display = 'none';
+        }
         return answer;
     }
 //Listening for a sumbit event on the form
@@ -136,92 +145,55 @@ form.addEventListener('submit', (e)=>{
 // Name Validation
     const newName = inputName.value;
     const regex = /^[A-Z][a-z]* [A-Z][a-z]*$/;
-    const validName = isValid(regex, newName);
-    if(!validName){
-        inputName.parentNode.classList.add('not-valid');
-        inputName.parentNode.classList.remove('valid');
-        inputName.parentNode.lastElementChild.style.display = 'block';
-    }else{
-       inputName.parentNode.classList.add('valid');
-       inputName.parentNode.classList.remove('not-valid');
-       inputName.parentNode.lastElementChild.style.display = 'none';
-    }
+    const validName = isValid(regex, newName, inputName);
+    
     // Email validation form
     
     const tempEmail = emailAddress.value;
     const regexEmail = /[^@]+@[^@.]+\.[a-z]+$/i;
-     const validEMail = isValid(regexEmail, tempEmail);
-     if(!validEMail){
-        emailAddress.parentNode.classList.add('not-valid');
-        emailAddress.parentNode.classList.remove('valid');
-        emailAddress.parentNode.lastElementChild.style.display = 'block';
-    }else{
-       emailAddress.parentNode.classList.add('valid');
-       emailAddress.parentNode.classList.remove('not-valid');
-       emailAddress.parentNode.lastElementChild.style.display = 'none';
-    }
+    const validEMail = isValid(regexEmail, tempEmail, emailAddress);
+    
     
     //---------******Needs Work!
     //Card number Validation
     const tempCard = cardNum.value;
     const visaRegex = /^4[0-9]{12}(?:[0-9]{3})?$/;
-    const validCard = isValid(visaRegex, tempCard);
-    if(!validCard){
-        cardNum.parentNode.classList.add('not-valid');
-        cardNum.parentNode.classList.remove('valid');
-        cardNum.parentNode.lastElementChild.style.display = 'block';
-    }else{
-       cardNum.parentNode.classList.add('valid');
-       cardNum.parentNode.classList.remove('not-valid');
-       cardNum.parentNode.lastElementChild.style.display = 'none';
-    }
+    const validCard = isValid(visaRegex, tempCard, cardNum);
+    
     //Zip code validation
     const tempZip = zipCode.value;
     const regexZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-    const validZip = isValid(regexZip, tempZip);
-    if(!validZip){
-        zipCode.parentNode.classList.add('not-valid');
-        zipCode.parentNode.classList.remove('valid');
-        zipCode.parentNode.lastElementChild.style.display = 'block';
-    }else{
-       zipCode.parentNode.classList.add('valid');
-       zipCode.parentNode.classList.remove('not-valid');
-       zipCode.parentNode.lastElementChild.style.display = 'none';
-    }
+    const validZip = isValid(regexZip, tempZip, zipCode);
+    
 
     //CVV code Validation
     const tempCvv=  cardCvv.value;
     const regexCvv = /^[0-9]{3}$/;
-    const validCvv = isValid(regexCvv, tempCvv);
-    if(!validCvv){
-        cardCvv.parentNode.classList.add('not-valid');
-        cardCvv.parentNode.classList.remove('valid');
-        cardCvv.parentNode.lastElementChild.style.display = 'block';
-    }else{
-       cardCvv.parentNode.classList.add('valid');
-       cardCvv.parentNode.classList.remove('not-valid');
-       cardCvv.parentNode.lastElementChild.style.display = 'none';
-    }
-
+    const validCvv = isValid(regexCvv, tempCvv, cardCvv);
+    
+    // used this if statment so that if at least one is not valid it would trigger the preventDefault event and stop the form from submitting.
     if((!validName)||(!validEMail) || (!validCard) || (!validZip) || (!validCvv)){
         e.preventDefault();
     }else{
 
     }
 
-    //Logging all tests 
-    console.log(validName);
-    console.log(validEMail);
-    console.log(validCard);
-    console.log(validZip);
-    console.log(validCvv);
+     //Logging all tests 
+    // console.log(validName);
+    // console.log(validEMail);
+    // console.log(validCard);
+    // console.log(validZip);
+    // console.log(validCvv);
     
 });
 
 // Accessibility Section 
-
+// Selecting all the inputs within the activities-box div
 const inputActivities = document.querySelectorAll('.activities-box input');
-console.log(inputActivities);
+
+
+     //Looping thrugh the inputs and adding event listeners to each input 
+     // When an activity is selected the parent element of the input is modified.
 for(let i = 0; i < inputActivities.length; i++){
     inputActivities[i].addEventListener('focus', (e)=>{
         e.target.parentNode.classList.add('focus');
