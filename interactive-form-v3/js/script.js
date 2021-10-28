@@ -193,7 +193,7 @@ const inputActivities = document.querySelectorAll('.activities-box input');
 
 
      //Looping thrugh the inputs and adding event listeners to each input 
-     // When an activity is selected the parent element of the input is modified.
+     // When an activity is selected the parent element of the input is modified by adding and removing the focus className
 for(let i = 0; i < inputActivities.length; i++){
     inputActivities[i].addEventListener('focus', (e)=>{
         e.target.parentNode.classList.add('focus');
