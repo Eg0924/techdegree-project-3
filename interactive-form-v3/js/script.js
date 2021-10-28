@@ -126,6 +126,7 @@ const form = document.querySelector('.container');
 
     function isValid(regex, value){
         const answer = regex.test(value);
+        
         return answer;
     }
 //Listening for a sumbit event on the form
@@ -136,31 +137,77 @@ form.addEventListener('submit', (e)=>{
     const newName = inputName.value;
     const regex = /^[A-Z][a-z]* [A-Z][a-z]*$/;
     const validName = isValid(regex, newName);
-    
+    if(!validName){
+        inputName.parentNode.classList.add('not-valid');
+        inputName.parentNode.classList.remove('valid');
+        inputName.parentNode.lastElementChild.style.display = 'block';
+    }else{
+       inputName.parentNode.classList.add('valid');
+       inputName.parentNode.classList.remove('not-valid');
+       inputName.parentNode.lastElementChild.style.display = 'none';
+    }
     // Email validation form
     
     const tempEmail = emailAddress.value;
     const regexEmail = /[^@]+@[^@.]+\.[a-z]+$/i;
      const validEMail = isValid(regexEmail, tempEmail);
-    
+     if(!validEMail){
+        emailAddress.parentNode.classList.add('not-valid');
+        emailAddress.parentNode.classList.remove('valid');
+        emailAddress.parentNode.lastElementChild.style.display = 'block';
+    }else{
+       emailAddress.parentNode.classList.add('valid');
+       emailAddress.parentNode.classList.remove('not-valid');
+       emailAddress.parentNode.lastElementChild.style.display = 'none';
+    }
     
     //---------******Needs Work!
     //Card number Validation
     const tempCard = cardNum.value;
     const visaRegex = /^4[0-9]{12}(?:[0-9]{3})?$/;
     const validCard = isValid(visaRegex, tempCard);
-
+    if(!validCard){
+        cardNum.parentNode.classList.add('not-valid');
+        cardNum.parentNode.classList.remove('valid');
+        cardNum.parentNode.lastElementChild.style.display = 'block';
+    }else{
+       cardNum.parentNode.classList.add('valid');
+       cardNum.parentNode.classList.remove('not-valid');
+       cardNum.parentNode.lastElementChild.style.display = 'none';
+    }
     //Zip code validation
     const tempZip = zipCode.value;
     const regexZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
     const validZip = isValid(regexZip, tempZip);
-
+    if(!validZip){
+        zipCode.parentNode.classList.add('not-valid');
+        zipCode.parentNode.classList.remove('valid');
+        zipCode.parentNode.lastElementChild.style.display = 'block';
+    }else{
+       zipCode.parentNode.classList.add('valid');
+       zipCode.parentNode.classList.remove('not-valid');
+       zipCode.parentNode.lastElementChild.style.display = 'none';
+    }
 
     //CVV code Validation
     const tempCvv=  cardCvv.value;
     const regexCvv = /^[0-9]{3}$/;
     const validCvv = isValid(regexCvv, tempCvv);
+    if(!validCvv){
+        cardCvv.parentNode.classList.add('not-valid');
+        cardCvv.parentNode.classList.remove('valid');
+        cardCvv.parentNode.lastElementChild.style.display = 'block';
+    }else{
+       cardCvv.parentNode.classList.add('valid');
+       cardCvv.parentNode.classList.remove('not-valid');
+       cardCvv.parentNode.lastElementChild.style.display = 'none';
+    }
 
+    if((!validName)||(!validEMail) || (!validCard) || (!validZip) || (!validCvv)){
+        e.preventDefault();
+    }else{
+
+    }
 
     //Logging all tests 
     console.log(validName);
@@ -168,11 +215,7 @@ form.addEventListener('submit', (e)=>{
     console.log(validCard);
     console.log(validZip);
     console.log(validCvv);
-    if((!validName) || (!validEMail) || (!validCard) || (!validZip) || (!validCvv)){
-        e.preventDefault();
-    }else{
-
-    }
+    
 });
 
 // Accessibility Section 
