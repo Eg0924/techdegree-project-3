@@ -5,7 +5,9 @@ inputName.focus();
 
 // Selecting all the inputs within the activities-box div
 const inputActivities = document.querySelectorAll('.activities-box input');
-
+ // Validating activities
+ const valActivities = document.getElementById('activities-box');
+    
 
 // Selecting the other 'Job Role' element and setting display to none to hide until user selects the 'other' option.
  const otherJobRole = document.getElementById('other-job-role');
@@ -168,7 +170,7 @@ form.addEventListener("submit", (e)=>{
    //e.preventDefault();
 // Name Validation
     const newName = inputName.value;
-    const regex = /^\D*$/;
+    const regex = /^\D+$/;
     const validName = isValid(regex, newName, inputName);
     
     // Email validation form
@@ -179,7 +181,11 @@ form.addEventListener("submit", (e)=>{
     
     
     //---------******Needs Work!
+
+
     //Card number Validation
+
+    if(paymentChoice.value !== 'Credit Card'){
     const tempCard = cardNum.value;
     const visaRegex = /^\d{13,16}$/;
     const validCard = isValid(visaRegex, tempCard, cardNum);
@@ -194,7 +200,9 @@ form.addEventListener("submit", (e)=>{
     const tempCvv=  cardCvv.value;
     const regexCvv = /^[0-9]{3}$/;
     const validCvv = isValid(regexCvv, tempCvv, cardCvv);
-    //
+    }else {
+
+    }
 
     let checked = inputActivities[0].checked || inputActivities[1].checked || inputActivities[2].checked || inputActivities[3].checked || inputActivities[4].checked || inputActivities[5].checked || inputActivities[6].checked ;
 
@@ -204,9 +212,7 @@ form.addEventListener("submit", (e)=>{
    
 
     
-    // Validating activities
-    const valActivities = document.getElementById('activities-box');
-    
+   
     // calling the function to check whether the activities are checked.
     modifyClasses(inputActivities);
     
