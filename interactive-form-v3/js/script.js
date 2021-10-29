@@ -3,6 +3,9 @@
 const inputName = document.getElementById('name');
 inputName.focus();
 
+// Selecting all the inputs within the activities-box div
+const inputActivities = document.querySelectorAll('.activities-box input');
+
 
 // Selecting the other 'Job Role' element and setting display to none to hide until user selects the 'other' option.
  const otherJobRole = document.getElementById('other-job-role');
@@ -86,7 +89,7 @@ payPal.hidden = true;
 bitCoin.hidden = true;
 
 // Giving the credit card element the selected attribute.
-paymentChoice.children[1].setAttribute('property', 'selected');
+paymentChoice.children[1].selected = true;
 
 //selecting the fieldset with all the payment divs 
 const options = document.querySelector('.payment-methods');
@@ -122,6 +125,12 @@ const form = document.querySelector('.container');
 // console.log(cardCvv);
 // console.log(form);
 
+
+// ----- Activities validation section
+
+
+
+
 //Validation Testing function and accessibility
 
 // function uses the input value for the field and test the value against the regex variable and then modifies the parent node based on whether the condition is met.
@@ -135,16 +144,31 @@ const form = document.querySelector('.container');
            element.parentNode.classList.add('valid');
            element.parentNode.classList.remove('not-valid');
            element.parentNode.lastElementChild.style.display = 'none';
-        }
+          }
         return answer;
+    }
+
+
+    // this function loops through an array checking if the inputs are checked in the Activities array of elements. It then modifies the classes based on the .checked property.
+
+    function modifyClasses(arr){
+        for(let i = 0; i< arr.length; i++){
+            if(arr[i].checked == false){
+               arr[i].parentNode.classList.add('not-valid');
+               arr[i].parentNode.classList.remove('valid');
+            }else{
+                arr[i].parentNode.classList.add('valid');
+                arr[i].parentNode.classList.remove('not-valid'); 
+            }
+        }
     }
 //Listening for a sumbit event on the form
 
-form.addEventListener('submit', (e)=>{
+form.addEventListener("submit", (e)=>{
    //e.preventDefault();
 // Name Validation
     const newName = inputName.value;
-    const regex = /^[A-Z][a-z]* [A-Z][a-z]*$/;
+    const regex = /^\D*$/;
     const validName = isValid(regex, newName, inputName);
     
     // Email validation form
@@ -157,7 +181,7 @@ form.addEventListener('submit', (e)=>{
     //---------******Needs Work!
     //Card number Validation
     const tempCard = cardNum.value;
-    const visaRegex = /^4[0-9]{12}(?:[0-9]{3})?$/;
+    const visaRegex = /^\d{13,16}$/;
     const validCard = isValid(visaRegex, tempCard, cardNum);
     
     //Zip code validation
@@ -170,27 +194,49 @@ form.addEventListener('submit', (e)=>{
     const tempCvv=  cardCvv.value;
     const regexCvv = /^[0-9]{3}$/;
     const validCvv = isValid(regexCvv, tempCvv, cardCvv);
+    //
+
+    let checked = inputActivities[0].checked || inputActivities[1].checked || inputActivities[2].checked || inputActivities[3].checked || inputActivities[4].checked || inputActivities[5].checked || inputActivities[6].checked ;
+
+
+
     
-    // used this if statment so that if at least one is not valid it would trigger the preventDefault event and stop the form from submitting.
-    if((!validName)||(!validEMail) || (!validCard) || (!validZip) || (!validCvv)){
+   
+
+    
+    // Validating activities
+    const valActivities = document.getElementById('activities-box');
+    
+    // calling the function to check whether the activities are checked.
+    modifyClasses(inputActivities);
+    
+    // checking if no activity is selected and displaying a message
+
+    if(!checked){
+        valActivities.parentNode.lastElementChild.style.display = 'block';
+    }else{
+        valActivities.parentNode.lastElementChild.style.display = 'none';
+    }
+    
+   
+
+    if((!validName) || (!validEMail) || (!validCard) || (!validZip) || (!validCvv) || (!checked)){
         e.preventDefault();
     }else{
-
+        console.log("The form has submitted");
     }
-
-     //Logging all tests 
-    // console.log(validName);
-    // console.log(validEMail);
-    // console.log(validCard);
-    // console.log(validZip);
-    // console.log(validCvv);
+    //Logging all tests 
+    console.log(validName);
+    console.log(validEMail);
+    console.log(validCard);
+    console.log(validZip);
+    console.log(validCvv);
     
 });
 
 // Accessibility Section 
-// Selecting all the inputs within the activities-box div
-const inputActivities = document.querySelectorAll('.activities-box input');
 
+//console.log(inputActivities);
 
      //Looping thrugh the inputs and adding event listeners to each input 
      // When an activity is selected the parent element of the input is modified by adding and removing the focus className
@@ -202,5 +248,7 @@ for(let i = 0; i < inputActivities.length; i++){
         e.target.parentNode.classList.remove('focus');
         
     });
+     
+      
     
 }
