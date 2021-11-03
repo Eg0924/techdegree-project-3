@@ -5,9 +5,11 @@ inputName.focus();
 
 // Selecting all the inputs within the activities-box div
 const inputActivities = document.querySelectorAll('.activities-box input');
+const valActivities = document.getElementById('activities-box');
  // Validating activities
- const valActivities = document.getElementById('activities-box');
-    
+ ;
+ 
+
 
 // Selecting the other 'Job Role' element and setting display to none to hide until user selects the 'other' option.
  const otherJobRole = document.getElementById('other-job-role');
@@ -62,16 +64,37 @@ let totalCost = 0;
 regForAct.addEventListener('change', (e)=>{
     //const cost = parseInt(e.target.getAttribute('data-cost'));
     let cost = e.target.getAttribute('data-cost');
+    
+    const dateAndTime = e.target.getAttribute('data-day-and-time');
     cost = +cost;
-   // console.log(cost, typeof cost);
+    //console.log(dateAndTime);
    //checking if an activity is checked and updating the total 
    if(e.target.checked){
     totalCost += cost;
-   }else{
-       totalCost -= cost;
-   }
+        for(let i = 1; i<inputActivities.length; i++) {  
+            const dateTime = inputActivities[i].getAttribute('data-day-and-time');
+
+        
+            if (dateAndTime === dateTime && inputActivities[i].checked != e.target.checked){
+            
+            e.target.checked = true;    
+            console.log(inputActivities[i]);
+            inputActivities[i].disabled = true;
+            inputActivities[i].parentNode.classList.add("disabled");
+            }
+            else{
+                inputActivities[i].disabled = false;
+                inputActivities[i].parentNode.classList.remove("disabled");
+            }
+        }
+    }else{
+            
+            totalCost -= cost;
+        } 
+    
 
    totalForAct.innerHTML = `<p>Total: $${totalCost.toFixed(2)}</p>`;
+      
     
 });
 
