@@ -254,12 +254,7 @@ const cardCvv = document.getElementById('cvv');
     }else{
         console.log("The form has submitted");
     }
-    //Logging all tests 
-    console.log(validName);
-    console.log(validEMail);
-    console.log(validCard);
-    console.log(validZip);
-    console.log(validCvv);
+    
     
 });
 
