@@ -193,16 +193,15 @@ const cardCvv = document.getElementById('cvv');
     
     
     // Email validation form
-    
+    // Email regex was used from the instruction videos
     const tempEmail = emailAddress.value;
     const regexEmail = /[^@]+@[^@.]+\.[a-z]+$/i;
     const validEMail = isValid(regexEmail, tempEmail, emailAddress);
     
 
+// In this validation section variables were created and passed to a general function to validate each field.
 
     //Card number Validation
-
-    
     const tempCard = cardNum.value;
     const visaRegex = /^\d{13,16}$/;
     const validCard = isValid(visaRegex, tempCard, cardNum);
@@ -210,9 +209,6 @@ const cardCvv = document.getElementById('cvv');
     //Zip code validation
     const tempZip = zipCode.value;
     const regexZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-    
-
-     
     
     //Validate if zipCode is empty or whether it has at least 5 digits
     if(tempZip.length ==0){
@@ -240,8 +236,6 @@ const cardCvv = document.getElementById('cvv');
 
     }
 
-
-    
     // checking if no activity is selected and displaying a message
     let activityChecked = true;
     if(totalCost > 0){
@@ -253,7 +247,8 @@ const cardCvv = document.getElementById('cvv');
     }
     
    
-
+    // THis checks if all the fields are truthy in order to submit the form
+    // I did it this way so that only the e.prevent default was called once in case two or more fields were invalid.
     if((!validName) || (!validEMail) || (!activityChecked) || (!creditCardTruthy) ){
         e.preventDefault();
     }else{
