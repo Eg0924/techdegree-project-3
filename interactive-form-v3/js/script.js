@@ -7,6 +7,7 @@ inputName.focus();
 const inputActivities = document.querySelectorAll('.activities-box input');
 const valActivities = document.getElementById('activities-box');
  // Validating activities
+ console.log(valActivities);
  ;
  
 
@@ -71,25 +72,13 @@ regForAct.addEventListener('change', (e)=>{
    //checking if an activity is checked and updating the total 
    if(e.target.checked){
     totalCost += cost;
-        for(let i = 1; i<inputActivities.length; i++) {  
-            const dateTime = inputActivities[i].getAttribute('data-day-and-time');
-
-        
-            if (dateAndTime === dateTime && inputActivities[i].checked != e.target.checked){
-            
-            e.target.checked = true;    
-            console.log(inputActivities[i]);
-            inputActivities[i].disabled = true;
-            inputActivities[i].parentNode.classList.add("disabled");
-            }
-            else{
-                inputActivities[i].disabled = false;
-                inputActivities[i].parentNode.classList.remove("disabled");
-            }
-        }
+    e.target.parentNode.classList.add('valid');
+    e.target.parentNode.classList.remove('not-valid');     
     }else{
-            
-            totalCost -= cost;
+         totalCost -= cost;
+         e.target.parentNode.classList.add('not-valid');
+         e.target.parentNode.classList.remove('valid');
+         
         } 
     
 
@@ -106,7 +95,7 @@ const payPal = document.getElementById('paypal');
 const bitCoin = document.getElementById('bitcoin');
 
 ///-----Logging out for testing
-// console.log(paymentChoice);
+ console.log(paymentChoice);
 // console.log(card);
 // console.log(payPal);
 // console.log(bitCoin);
@@ -125,6 +114,7 @@ paymentChoice.addEventListener('change', (e)=>{
 
     for(let i = 2; i < options.children.length; i++){    
     const choice = e.target.value;
+    console.log(e.target.value);
     const displayDivs = options.children[i].getAttribute('class');
     
     //Condition to match the selection's value with the div's class.
@@ -138,11 +128,6 @@ paymentChoice.addEventListener('change', (e)=>{
 });
 
 // Form validation section 
-const emailAddress = document.getElementById('email');
-const cardNum = document.getElementById('cc-num');
-const zipCode = document.getElementById('zip');
-const cardCvv = document.getElementById('cvv');
-const form = document.querySelector('.container');
 
 // console.log(emailAddress);
 // console.log(cardNum);
@@ -176,21 +161,27 @@ const form = document.querySelector('.container');
 
     // this function loops through an array checking if the inputs are checked in the Activities array of elements. It then modifies the classes based on the .checked property.
 
-    function modifyClasses(arr){
-        for(let i = 0; i< arr.length; i++){
-            if(arr[i].checked == false){
-               arr[i].parentNode.classList.add('not-valid');
-               arr[i].parentNode.classList.remove('valid');
-            }else{
-                arr[i].parentNode.classList.add('valid');
-                arr[i].parentNode.classList.remove('not-valid'); 
-            }
-        }
-    }
+    // function modifyClasses(arr){
+    //     for(let i = 0; i< arr.length; i++){
+    //         if(arr[i].checked == false){
+    //            arr[i].parentNode.classList.add('not-valid');
+    //            arr[i].parentNode.classList.remove('valid');
+    //         }else{
+    //             arr[i].parentNode.classList.add('valid');
+    //             arr[i].parentNode.classList.remove('not-valid'); 
+    //         }
+    //     }
+    // }
 //Listening for a sumbit event on the form
-
+const form = document.querySelector('.container');
 form.addEventListener("submit", (e)=>{
-   //e.preventDefault();
+   1
+const emailAddress = document.getElementById('email');
+const cardNum = document.getElementById('cc-num');
+const zipCode = document.getElementById('zip');
+const cardCvv = document.getElementById('cvv');
+
+
 // Name Validation
     const newName = inputName.value;
     const regex = /^\D+$/;
@@ -208,7 +199,7 @@ form.addEventListener("submit", (e)=>{
 
     //Card number Validation
 
-    if(paymentChoice.value !== 'Credit Card'){
+    
     const tempCard = cardNum.value;
     const visaRegex = /^\d{13,16}$/;
     const validCard = isValid(visaRegex, tempCard, cardNum);
@@ -223,33 +214,36 @@ form.addEventListener("submit", (e)=>{
     const tempCvv=  cardCvv.value;
     const regexCvv = /^[0-9]{3}$/;
     const validCvv = isValid(regexCvv, tempCvv, cardCvv);
+
+    // Validate credit card selection and fields.
+    let creditCardTruthy = true;
+    if(paymentChoice.value == 'credit-card'){
+      if(validCard && validZip && validCvv){
+        creditCardTruthy = true;                         
+        }else{
+            creditCardTruthy = false;
+        }
     }else {
 
     }
 
-    let checked = inputActivities[0].checked || inputActivities[1].checked || inputActivities[2].checked || inputActivities[3].checked || inputActivities[4].checked || inputActivities[5].checked || inputActivities[6].checked ;
-
-
-
     
-   
-
-    
-   
     // calling the function to check whether the activities are checked.
-    modifyClasses(inputActivities);
+    //------ modifyClasses(inputActivities);
     
     // checking if no activity is selected and displaying a message
-
-    if(!checked){
-        valActivities.parentNode.lastElementChild.style.display = 'block';
-    }else{
+    let activityChecked = true;
+    if(totalCost > 0){
+        activityChecked = true;
         valActivities.parentNode.lastElementChild.style.display = 'none';
+    }else{
+        activityChecked = false;
+        valActivities.parentNode.lastElementChild.style.display = 'block';
     }
     
    
 
-    if((!validName) || (!validEMail) || (!validCard) || (!validZip) || (!validCvv) || (!checked)){
+    if((!validName) || (!validEMail) || (!activityChecked) || (!creditCardTruthy) ){
         e.preventDefault();
     }else{
         console.log("The form has submitted");
