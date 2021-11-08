@@ -163,7 +163,7 @@ paymentChoice.addEventListener('change', (e)=>{
     }
     // Name validation extra credit
     //The keyup listener makes sure the line is not empty! when the line goes empty it displays the message
-    
+
     inputName.addEventListener('keyup', (e)=>{
         const nameValidation = inputName.value;
         const regVal =  /^\D+$/; 
@@ -173,11 +173,12 @@ paymentChoice.addEventListener('change', (e)=>{
         }else{
             
         }
+    });
 
 //Listening for a sumbit event on the form
 const form = document.querySelector('.container');
 form.addEventListener("submit", (e)=>{
-   1
+   
 const emailAddress = document.getElementById('email');
 const cardNum = document.getElementById('cc-num');
 const zipCode = document.getElementById('zip');
@@ -190,7 +191,7 @@ const cardCvv = document.getElementById('cvv');
     const validName = isValid(regex, newName, inputName);
     
     
-    });
+    
     // Email validation form
     
     const tempEmail = emailAddress.value;
@@ -209,8 +210,18 @@ const cardCvv = document.getElementById('cvv');
     //Zip code validation
     const tempZip = zipCode.value;
     const regexZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-    const validZip = isValid(regexZip, tempZip, zipCode);
     
+
+     
+    
+    //Validate if zipCode is empty or whether it has at least 5 digits
+    if(tempZip.length ==0){
+        document.getElementById('zip-hint').textContent ="Field cannot be blank!";
+        zipCode.parentNode.lastElementChild.style.display = 'block';
+    }else{
+        zipCode.parentNode.lastElementChild.style.display = 'block'; 
+    }
+    const validZip = isValid(regexZip, tempZip, zipCode);
 
     //CVV code Validation
     const tempCvv=  cardCvv.value;
