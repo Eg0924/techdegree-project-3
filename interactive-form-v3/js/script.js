@@ -6,9 +6,8 @@ inputName.focus();
 // Selecting all the inputs within the activities-box div
 const inputActivities = document.querySelectorAll('.activities-box input');
 const valActivities = document.getElementById('activities-box');
- // Validating activities
- console.log(valActivities);
- ;
+ 
+
  
 
 
@@ -60,6 +59,7 @@ const regForAct = document.getElementById('activities');
 const totalForAct = document.getElementById('activities-cost');
 
 
+
 let totalCost = 0;
 // event listener to store the value of the activity clicked by user!
 regForAct.addEventListener('change', (e)=>{
@@ -76,12 +76,25 @@ regForAct.addEventListener('change', (e)=>{
     e.target.parentNode.classList.remove('not-valid');     
     }else{
          totalCost -= cost;
-         e.target.parentNode.classList.add('not-valid');
+         //e.target.parentNode.classList.add('not-valid');
          e.target.parentNode.classList.remove('valid');
          
         } 
     
+     // Extra credit
 
+     for(let i = 1; i<inputActivities.length; i++ ){
+         const activityTime = inputActivities[i].getAttribute('data-day-and-time');
+         if(dateAndTime == activityTime && inputActivities[i] != e.target && e.target.checked){
+            console.log(inputActivities[i]);
+            inputActivities[i].disabled = true;
+            inputActivities[i].parentNode.classList.add('disabled');
+         }else{
+            inputActivities[i].disabled = false;
+            inputActivities[i].parentNode.classList.remove('disabled');
+            
+         }
+     }
    totalForAct.innerHTML = `<p>Total: $${totalCost.toFixed(2)}</p>`;
       
     
@@ -95,7 +108,7 @@ const payPal = document.getElementById('paypal');
 const bitCoin = document.getElementById('bitcoin');
 
 ///-----Logging out for testing
- console.log(paymentChoice);
+//  console.log(paymentChoice);
 // console.log(card);
 // console.log(payPal);
 // console.log(bitCoin);
@@ -127,16 +140,7 @@ paymentChoice.addEventListener('change', (e)=>{
  }
 });
 
-// Form validation section 
 
-// console.log(emailAddress);
-// console.log(cardNum);
-// console.log(zipCode);
-// console.log(cardCvv);
-// console.log(form);
-
-
-// ----- Activities validation section
 
 
 
@@ -157,21 +161,19 @@ paymentChoice.addEventListener('change', (e)=>{
           }
         return answer;
     }
+    // Name validation extra credit
+    //The keyup listener makes sure the line is not empty! when the line goes empty it displays the message
+    
+    inputName.addEventListener('keyup', (e)=>{
+        const nameValidation = inputName.value;
+        const regVal =  /^\D+$/; 
+        const isValidName = isValid(regVal, nameValidation, inputName);
+        if(!isValidName){
+            inputName.parentNode.lastElementChild.style.display = 'block';
+        }else{
+            
+        }
 
-
-    // this function loops through an array checking if the inputs are checked in the Activities array of elements. It then modifies the classes based on the .checked property.
-
-    // function modifyClasses(arr){
-    //     for(let i = 0; i< arr.length; i++){
-    //         if(arr[i].checked == false){
-    //            arr[i].parentNode.classList.add('not-valid');
-    //            arr[i].parentNode.classList.remove('valid');
-    //         }else{
-    //             arr[i].parentNode.classList.add('valid');
-    //             arr[i].parentNode.classList.remove('not-valid'); 
-    //         }
-    //     }
-    // }
 //Listening for a sumbit event on the form
 const form = document.querySelector('.container');
 form.addEventListener("submit", (e)=>{
@@ -187,14 +189,14 @@ const cardCvv = document.getElementById('cvv');
     const regex = /^\D+$/;
     const validName = isValid(regex, newName, inputName);
     
+    
+    });
     // Email validation form
     
     const tempEmail = emailAddress.value;
     const regexEmail = /[^@]+@[^@.]+\.[a-z]+$/i;
     const validEMail = isValid(regexEmail, tempEmail, emailAddress);
     
-    
-    //---------******Needs Work!
 
 
     //Card number Validation
@@ -227,9 +229,7 @@ const cardCvv = document.getElementById('cvv');
 
     }
 
-    
-    // calling the function to check whether the activities are checked.
-    //------ modifyClasses(inputActivities);
+
     
     // checking if no activity is selected and displaying a message
     let activityChecked = true;
