@@ -76,7 +76,7 @@ regForAct.addEventListener('change', (e)=>{
     e.target.parentNode.classList.remove('not-valid');     
     }else{
          totalCost -= cost;
-         //e.target.parentNode.classList.add('not-valid');
+         e.target.parentNode.classList.add('not-valid');
          e.target.parentNode.classList.remove('valid');
          
         } 
@@ -154,6 +154,7 @@ paymentChoice.addEventListener('change', (e)=>{
             element.parentNode.classList.add('not-valid');
             element.parentNode.classList.remove('valid');
             element.parentNode.lastElementChild.style.display = 'block';
+            
         }else{
            element.parentNode.classList.add('valid');
            element.parentNode.classList.remove('not-valid');
@@ -209,12 +210,12 @@ const cardCvv = document.getElementById('cvv');
     //Zip code validation
     const tempZip = zipCode.value;
     const regexZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-    
+    console.log(tempZip.length);
     //Validate if zipCode is empty or whether it has at least 5 digits
     if(tempZip.length ==0){
         document.getElementById('zip-hint').textContent ="Field cannot be blank!";
-        zipCode.parentNode.lastElementChild.style.display = 'block';
-    }else{
+        
+    }if(tempZip.length < 4){
         zipCode.parentNode.lastElementChild.style.display = 'block'; 
     }
     const validZip = isValid(regexZip, tempZip, zipCode);
@@ -235,7 +236,7 @@ const cardCvv = document.getElementById('cvv');
     }else {
 
     }
-
+    console.log(valActivities.parentNode.lastElementChild);
     // checking if no activity is selected and displaying a message
     let activityChecked = true;
     if(totalCost > 0){
@@ -243,6 +244,7 @@ const cardCvv = document.getElementById('cvv');
         valActivities.parentNode.lastElementChild.style.display = 'none';
     }else{
         activityChecked = false;
+        valActivities.parentNode.lastElementChild.classList.add('not-valid');
         valActivities.parentNode.lastElementChild.style.display = 'block';
     }
     
