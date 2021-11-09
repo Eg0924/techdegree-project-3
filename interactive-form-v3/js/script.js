@@ -18,7 +18,7 @@ const valActivities = document.getElementById('activities-box');
  //Setting an event listener to listen for change in the job role dropdown menu
  // Using conditional to determine when 'other' is selected so the other input box shows.
  const jobRole = document.getElementById('title');
- //console.log(jobRole);
+ 
  
  jobRole.addEventListener('change', (e)=>{
     if(e.target.value === 'other'){
@@ -68,7 +68,7 @@ regForAct.addEventListener('change', (e)=>{
     
     const dateAndTime = e.target.getAttribute('data-day-and-time');
     cost = +cost;
-    //console.log(dateAndTime);
+    
    //checking if an activity is checked and updating the total 
    if(e.target.checked){
     totalCost += cost;
@@ -86,7 +86,6 @@ regForAct.addEventListener('change', (e)=>{
      for(let i = 1; i<inputActivities.length; i++ ){
          const activityTime = inputActivities[i].getAttribute('data-day-and-time');
          if(dateAndTime == activityTime && inputActivities[i] != e.target && e.target.checked){
-            console.log(inputActivities[i]);
             inputActivities[i].disabled = true;
             inputActivities[i].parentNode.classList.add('disabled');
          }else{
@@ -107,11 +106,7 @@ const card = document.getElementById('credit-card');
 const payPal = document.getElementById('paypal');
 const bitCoin = document.getElementById('bitcoin');
 
-///-----Logging out for testing
-//  console.log(paymentChoice);
-// console.log(card);
-// console.log(payPal);
-// console.log(bitCoin);
+
 payPal.hidden = true;
 bitCoin.hidden = true;
 
@@ -127,7 +122,7 @@ paymentChoice.addEventListener('change', (e)=>{
 
     for(let i = 2; i < options.children.length; i++){    
     const choice = e.target.value;
-    console.log(e.target.value);
+    
     const displayDivs = options.children[i].getAttribute('class');
     
     //Condition to match the selection's value with the div's class.
@@ -210,7 +205,7 @@ const cardCvv = document.getElementById('cvv');
     //Zip code validation
     const tempZip = zipCode.value;
     const regexZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-    console.log(tempZip.length);
+    
     //Validate if zipCode is empty or whether it has at least 5 digits
     if(tempZip.length ==0){
         document.getElementById('zip-hint').textContent ="Field cannot be blank!";
@@ -236,7 +231,7 @@ const cardCvv = document.getElementById('cvv');
     }else {
 
     }
-    console.log(valActivities.parentNode.lastElementChild);
+    
     // checking if no activity is selected and displaying a message
     let activityChecked = true;
     if(totalCost > 0){
@@ -262,7 +257,7 @@ const cardCvv = document.getElementById('cvv');
 
 // Accessibility Section 
 
-//console.log(inputActivities);
+
 
      //Looping thrugh the inputs and adding event listeners to each input 
      // When an activity is selected the parent element of the input is modified by adding and removing the focus className
